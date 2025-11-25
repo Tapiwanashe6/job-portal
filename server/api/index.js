@@ -12,15 +12,18 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Connect to DB per request
+// Initialize DB connection once
 let dbConnected = false;
+
+// Middleware to ensure DB is connected
 app.use(async (req, res, next) => {
   if (!dbConnected) {
     try {
       await connectDB();
       dbConnected = true;
-    } catch (err) {
-      return next(err);
+    } catch (error) {
+      console.error('Failed to connect to database:', error);
+      // Continue anyway to avoid crashing - some routes may not need DB
     }
   }
   next();
@@ -28,8 +31,17 @@ app.use(async (req, res, next) => {
 
 // Routes
 app.get('/', (req, res) => res.send('API Working'));
-app.get('/debug-sentry', (req, res) => { throw new Error('My first Sentry error!'); });
+app.get('/debug-sentry', (req, res) => { 
+  throw new Error('My first Sentry error!'); 
+});
 app.post('/webhooks', clerkWebhooks);
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error('Error:', err);
+  Sentry.captureException(err);
+  res.status(500).json({ error: 'Internal Server Error' });
+});
 
 // Sentry error handler
 Sentry.setupExpressErrorHandler(app);
