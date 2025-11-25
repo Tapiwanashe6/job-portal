@@ -11,14 +11,20 @@ function Navbar(props) {
 
     const navigate = useNavigate()
 
-    const {setShowRecruiterLogin} = useContext(AppContext)
+    const {setShowRecruiterLogin, recruiterData, logoutRecruiter} = useContext(AppContext)
 
     return (
         <div className='shadow py-4'>
            <div className='container px-4 2xl:px-20 mx-auto flex justify-between items-center'>
              <img onClick={()=> navigate('/')} className='cursor-pointer' src={assets.logo} alt="Logo" />
              {
-             user
+             recruiterData
+             ?<div className='flex items-center gap-3'>
+                <Link to={'/dashboard'} className='text-gray-600'>Dashboard</Link>
+                <p className='max-sm:hidden'>Hi, {recruiterData.name}!</p>
+                <button onClick={logoutRecruiter} className='text-gray-600 px-4 py-2 border border-gray-300 rounded-lg'>Logout</button>
+             </div>
+             : user
              ?<div className='flex items-center gap-3'>
                 <Link to={'/applications'}>Applied Jobs</Link>
                 <p className='max-sm:hidden'>Hi, {user.firstName + ' ' + user.lastName}!</p>

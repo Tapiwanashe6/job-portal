@@ -13,7 +13,7 @@ function RecruiterLogin(props) {
 
     const [isTextDataSubmitted,setIsTextDataSubmitted] = useState(false)
 
-    const {setShowRecruiterLogin} = useContext(AppContext)
+    const {setShowRecruiterLogin, setRecruiterData} = useContext(AppContext)
 
     const onSubmitHandler = async (e) => {
         e.preventDefault()
@@ -34,6 +34,7 @@ function RecruiterLogin(props) {
             }
             localStorage.setItem('recruiterAccount', JSON.stringify(recruiterData))
             localStorage.setItem('recruiterLoggedIn', 'true')
+            setRecruiterData(recruiterData)
             alert('Account created successfully! You are now logged in.')
             setShowRecruiterLogin(false)
             return
@@ -48,9 +49,10 @@ function RecruiterLogin(props) {
                 return
             }
 
-            const recruiterData = JSON.parse(savedRecruiter)
-            if (recruiterData.email === email && recruiterData.password === password) {
+            const recruiterDataStored = JSON.parse(savedRecruiter)
+            if (recruiterDataStored.email === email && recruiterDataStored.password === password) {
                 localStorage.setItem('recruiterLoggedIn', 'true')
+                setRecruiterData(recruiterDataStored)
                 alert('Login successful!')
                 setShowRecruiterLogin(false)
             } else {

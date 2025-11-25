@@ -17,6 +17,8 @@ export const AppContextProvider = (props) => {
 
     const [showRecruiterLogin,setShowRecruiterLogin] = useState(false)
 
+    const [recruiterData, setRecruiterData] = useState(null)
+
     const [applications, setApplications] = useState([])
 
     //function to fetch jobs
@@ -29,6 +31,15 @@ export const AppContextProvider = (props) => {
         const savedApplications = localStorage.getItem('jobApplications')
         if (savedApplications) {
             setApplications(JSON.parse(savedApplications))
+        }
+        
+        // Check if recruiter is logged in
+        const isRecruiterLoggedIn = localStorage.getItem('recruiterLoggedIn')
+        if (isRecruiterLoggedIn === 'true') {
+            const recruiter = localStorage.getItem('recruiterAccount')
+            if (recruiter) {
+                setRecruiterData(JSON.parse(recruiter))
+            }
         }
     },[])
 
@@ -58,6 +69,13 @@ export const AppContextProvider = (props) => {
         return applications
     }
 
+    // Function to logout recruiter
+    const logoutRecruiter = () => {
+        localStorage.removeItem('recruiterLoggedIn')
+        setRecruiterData(null)
+        setShowRecruiterLogin(false)
+    }
+
     useEffect(()=>{
         fetchJobs()
     },[])
@@ -67,8 +85,10 @@ export const AppContextProvider = (props) => {
         isSearched, setIsSearched,
         jobs, setJobs,
         showRecruiterLogin,setShowRecruiterLogin,
+        recruiterData, setRecruiterData,
         applications, setApplications,
-        applyForJob, getApplications
+        applyForJob, getApplications,
+        logoutRecruiter
     }
     return (
     <AppContext.Provider value={value}>
