@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { useOutletContext, useParams } from 'react-router-dom';
+import { useOutletContext, useParams, useNavigate } from 'react-router-dom';
 import AppContext from '../context/AppContext';
 import Loading from '../components/Loading';
 import Navbar from '../components/Navbar';
@@ -12,10 +12,12 @@ import Footer from '../components/Footer';
 function ApplyJob() {
 
     const { id } = useParams()
+    const navigate = useNavigate()
 
     const [JobData, setJobData] = useState(null)
+    const [isApplied, setIsApplied] = useState(false)
 
-    const {jobs} = useContext(AppContext)
+    const {jobs, applyForJob, applications} = useContext(AppContext)
 
     const fetchJob = async () => {
         const data = jobs.filter(job => job._id === id)
@@ -30,6 +32,22 @@ function ApplyJob() {
             fetchJob()
         }
     },[id,jobs])
+
+    // Check if user has already applied for this job
+    useEffect(()=>{
+        const hasApplied = applications.some(app => app.jobId === id)
+        setIsApplied(hasApplied)
+    },[applications, id])
+
+    const handleApply = () => {
+        if (JobData) {
+            const success = applyForJob(JobData)
+            if (success) {
+                setIsApplied(true)
+                alert('Application submitted successfully!')
+            }
+        }
+    }
 
     return JobData ?(
         <>
@@ -64,7 +82,13 @@ function ApplyJob() {
                         </div>
 
                         <div className='flex flex-col justify-center text-end text-sm max-md:mx-auto mx-md:tex-center'>
-                            <button className='bg-blue-600 p-2.5 px-10 text-white rounded'>Apply Now</button>
+                            <button 
+                                onClick={handleApply}
+                                disabled={isApplied}
+                                className={`p-2.5 px-10 text-white rounded font-medium ${isApplied ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700'}`}
+                            >
+                                {isApplied ? 'Applied' : 'Apply Now'}
+                            </button>
                             <p className='mt-1 text-gray-600'>Posted {moment(JobData.date).fromNow()}</p>
                         </div>
 
@@ -73,7 +97,13 @@ function ApplyJob() {
                         <div className='w-full lg:w-2/3'>
                             <h2 className='font-bold text-2xl mb-4'>Job description</h2>
                             <div className='rich-text' dangerouslySetInnerHTML={{__html:JobData.description}}></div>
-                            <button className='bg-blue-600 p-2.5 px-10 text-white rounded mt-10'>Apply Now</button>
+                            <button 
+                                onClick={handleApply}
+                                disabled={isApplied}
+                                className={`p-2.5 px-10 text-white rounded font-medium mt-10 ${isApplied ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700'}`}
+                            >
+                                {isApplied ? 'Applied' : 'Apply Now'}
+                            </button>
                         </div>
                         {/*Right Section More Jobs */}
                         <div className='w-full lg:w-1/3 mt-8 lg:mt-0 lg:ml-8 space-y-5'>

@@ -1,14 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import Navbar from '../components/Navbar';
-import { assets, jobsApplied } from '../assets/assets';
+import { assets } from '../assets/assets';
 import moment from 'moment';
 import Footer from '../components/Footer';
+import AppContext from '../context/AppContext';
 
 function Applications(props) {
 
-
     const [isEdit, setIsEdit] = useState(false)
     const [resume, setResume] = useState(null)
+    const {applications} = useContext(AppContext)
 
     return (
         <div>
@@ -41,29 +42,37 @@ function Applications(props) {
                     <thead>
                         <tr>
                             <th className='py-3 px-4 border-b text-left'>Company</th>
-                            <th className='py-3 px-4 border-b text-left'>Job Tile</th>
-                            <th className='py-3 px-4 border-b text-left max-sm:hidden'>Locaion</th>
+                            <th className='py-3 px-4 border-b text-left'>Job Title</th>
+                            <th className='py-3 px-4 border-b text-left max-sm:hidden'>Location</th>
                             <th className='py-3 px-4 border-b text-left max-sm:hidden'>Date</th>
                             <th className='py-3 px-4 border-b text-left'>Status</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {jobsApplied.map((job,index)=>true ? (
+                        {applications && applications.length > 0 ? (
+                            applications.map((job,index)=>(
+                                <tr key={index}>
+                                    <td className='py-3 px-4 flex items-center gap-2 border-b'>
+                                        <img className='w-8 h-8' src={assets.company_icon} alt="" />
+                                        {job.company}
+                                    </td>
+                                    <td className='py-2 px-4 border-b'>{job.jobTitle}</td>
+                                    <td className='py-2 px-4 border-b max-sm:hidden'>{job.location}</td>
+                                    <td className='py-2 px-4 border-b max-sm:hidden'>{moment(job.date).format('ll')}</td>
+                                    <td className='py-2 px-4 border-b'>
+                                        <span className={`px-4 py-1.5 rounded ${job.status === 'Accepted' ? 'bg-green-100 text-green-700' : job.status === 'Rejected' ? 'bg-red-100 text-red-700' : 'bg-blue-100 text-blue-700'}`}>
+                                            {job.status}
+                                        </span>                                 
+                                    </td>
+                                </tr>
+                            ))
+                        ) : (
                             <tr>
-                                <td className='py-3 px-4 flex items-center gap-2 border-b'>
-                                    <img className='w-8 h-8' src={job.logo} alt="" />
-                                    {job.company}
-                                </td>
-                                <td className='py-2 px-4 border-b'>{job.title}</td>
-                                <td className='py-2 px-4 border-b max-sm:hidden'>{job.location}</td>
-                                <td className='py-2 px-4 border-b max-sm:hidden'>{moment(job.date).format('ll')}</td>
-                                <td className='py-2 px-4 border-b'>
-                                    <span className={`${job.status === 'Accepted' ? 'bg-green-100' : job.status === 'Rejected' ? 'bg-red-100' : 'bg-blue-100'} px-4 py-1.5 rounded`}>
-                                        {job.status}
-                                    </span>                                 
+                                <td colSpan='5' className='py-4 px-4 text-center text-gray-500'>
+                                    No applications yet. Start applying for jobs!
                                 </td>
                             </tr>
-                        ) : (null) )}
+                        )}
                     </tbody>
                 </table>
             </div>
