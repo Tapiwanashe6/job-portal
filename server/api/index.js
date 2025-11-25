@@ -1,41 +1,38 @@
-import serverless from 'serverless-http'
-import express from 'express'
-import cors from 'cors'
-import 'dotenv/config'
-import connectDB from '../config/db.js'
-import clerkWebhooks from '../controllers/webhooks.js'
-import '../config/instrument.js'
-import * as Sentry from '@sentry/node'
+import serverless from 'serverless-http';
+import express from 'express';
+import cors from 'cors';
+import 'dotenv/config';
+import connectDB from '../config/db.js';
+import clerkWebhooks from '../controllers/webhooks.js';
+import '../config/instrument.js';
+import * as Sentry from '@sentry/node';
 
-const app = express()
+const app = express();
 
-// Middlewares
-app.use(cors())
-app.use(express.json())
+app.use(cors());
+app.use(express.json());
 
-// Connect to DB per request (avoids top-level await issues)
-let dbConnected = false
+// Connect to DB per request
+let dbConnected = false;
 app.use(async (req, res, next) => {
   if (!dbConnected) {
     try {
-      await connectDB()
-      dbConnected = true
+      await connectDB();
+      dbConnected = true;
     } catch (err) {
-      return next(err)
+      return next(err);
     }
   }
-  next()
-})
+  next();
+});
 
 // Routes
-app.get('/', (req, res) => res.send('API Working'))
-app.get('/debug=sentry', (req, res) => {
-  throw new Error('My first Sentry error!')
-})
-app.post('/webhooks', clerkWebhooks)
+app.get('/', (req, res) => res.send('API Working'));
+app.get('/debug=sentry', (req, res) => { throw new Error('My first Sentry error!'); });
+app.post('/webhooks', clerkWebhooks);
 
 // Sentry error handler
-Sentry.setupExpressErrorHandler(app)
+Sentry.setupExpressErrorHandler(app);
 
 // Export handler for Vercel
-export const handler = serverless(app)
+export const handler = serverless(app);
