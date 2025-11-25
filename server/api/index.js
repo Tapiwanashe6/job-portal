@@ -28,7 +28,7 @@ app.use(async (req, res, next) => {
 
 // Routes
 app.get('/', (req, res) => res.send('API Working'));
-app.get('/debug=sentry', (req, res) => { throw new Error('My first Sentry error!'); });
+app.get('/debug-sentry', (req, res) => { throw new Error('My first Sentry error!'); });
 app.post('/webhooks', clerkWebhooks);
 
 // Sentry error handler
