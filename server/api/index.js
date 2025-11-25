@@ -10,15 +10,23 @@ app.use(express.json());
 
 // Test route that doesn't require DB
 app.get('/', (req, res) => {
-  res.json({ message: 'API Working' });
+  try {
+    res.json({ message: 'API Working' });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });
 
 // Health check
 app.get('/health', (req, res) => {
-  res.json({ status: 'OK' });
+  try {
+    res.json({ status: 'OK' });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });
 
-// Error handling middleware
+// Catch-all error handler
 app.use((err, req, res, next) => {
   console.error('Error:', err);
   res.status(500).json({ error: 'Internal Server Error', message: err.message });
@@ -29,5 +37,4 @@ app.use((req, res) => {
   res.status(404).json({ error: 'Not Found' });
 });
 
-// Export handler for Vercel
-export const handler = serverless(app);
+export default serverless(app);
