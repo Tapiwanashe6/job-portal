@@ -40,7 +40,7 @@ Before starting, ensure you have:
 
 ### Step 1: Clone & Navigate
 ```bash
-git clone https://github.com/Tapiwanashe6/job-portal.git
+git clone https://github.com/Tapiwanashe6/JobGuaranteed.git
 cd JobGuaranteed
 ```
 
@@ -364,7 +364,7 @@ npm run build
 
 ## 📞 Support
 
-- **Issues:** https://github.com/Tapiwanashe6/job-portal/issues
+- **Issues:** https://github.com/Tapiwanashe6/JobGuaranteed/issues
 - **Browser Console:** F12 for errors
 - **Terminal Output:** Check for error messages
 
