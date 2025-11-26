@@ -1,64 +1,85 @@
-# Job Portal - Complete Setup Guide
+# JobGuaranteed - Job Portal Platform
 
-A full-stack job portal application with **React frontend** and **Express backend**, featuring a unique **Dual Mode** that lets you switch between simulated API (localStorage) and real backend API.
+A full-stack job portal application with **React 19 frontend** and **Express backend**, featuring a unique **Dual Mode** (simulated API or real backend).
 
 ---
 
-## 📋 Project Overview
+## 📋 What is JobGuaranteed?
 
-**Job Portal** is a modern job search and recruiter platform with:
-
+A modern job search platform with:
 - ✅ Browse and search jobs
 - ✅ Apply for jobs with CV upload
 - ✅ Recruiter dashboard to post jobs
 - ✅ View and manage applications
-- ✅ User authentication (Clerk)
-- ✅ Dual Mode API (simulated or real backend)
-- ✅ Responsive design (Tailwind CSS)
+- ✅ Responsive design (Mobile, Tablet, Desktop)
 - ✅ Rwanda-only job locations
 
 ---
 
-## 🚀 Quick Start
+## 🛠️ Prerequisites
 
-### Option 1: Simulated API (Easiest) 💾
+Before starting, ensure you have:
 
-**No backend needed. Perfect for quick development!**
+1. **Node.js 16+** and **npm 8+**
+   ```bash
+   node --version
+   npm --version
+   ```
+   Install from: https://nodejs.org/
 
+2. **Git** (optional, for cloning)
+   ```bash
+   git --version
+   ```
+
+3. **A code editor** (VS Code recommended)
+
+---
+
+## �� Quick Start (5 Minutes)
+
+### Step 1: Clone & Navigate
+```bash
+git clone https://github.com/Tapiwanashe6/job-portal.git
+cd JobGuaranteed
+```
+
+### Step 2: Install Dependencies
+
+**Terminal 1 - Frontend:**
+```bash
+cd client
+npm install
+```
+
+**Terminal 2 - Backend:**
+```bash
+cd server
+npm install
+```
+
+### Step 3: Run the App
+
+**Option A: Simulated Mode (No Backend) ⚡**
 ```bash
 cd client
 npm run dev
 ```
-
 Open: **http://localhost:5173**
 
-✅ Works offline
-✅ Data in browser localStorage
-✅ Instant startup
+**Option B: Real Backend 🌐**
 
----
-
-### Option 2: Real Backend 🌐
-
-**Full production-like setup with backend persistence.**
-
-**Terminal 1 - Backend:**
+Terminal 1:
 ```bash
 cd server
 npm start
 ```
-✓ Runs on http://localhost:5000
 
-**Terminal 2 - Frontend:**
+Terminal 2:
 ```bash
 cd client
+# Edit .env.local: VITE_USE_REAL_API=true
 npm run dev
-```
-✓ Runs on http://localhost:5173 (or next available port)
-
-Then update `client/.env.local`:
-```bash
-VITE_USE_REAL_API=true
 ```
 
 ---
@@ -66,467 +87,297 @@ VITE_USE_REAL_API=true
 ## 📁 Project Structure
 
 ```
-job-portal/
-├── client/                          # React Frontend
+JobGuaranteed/
+├── client/                    # React Frontend
 │   ├── src/
-│   │   ├── components/              # React components
-│   │   │   ├── Navbar.jsx
-│   │   │   ├── Hero.jsx
-│   │   │   ├── JobLIsting.jsx
-│   │   │   ├── JobCard.jsx
-│   │   │   ├── ApplyModal.jsx
-│   │   │   ├── Dashboard.jsx
-│   │   │   └── ...more components
-│   │   ├── pages/                   # Page components
-│   │   │   ├── Home.jsx
-│   │   │   ├── AddJob.jsx
-│   │   │   ├── Applications.jsx
-│   │   │   ├── ManageJobs.jsx
-│   │   │   └── ...more pages
-│   │   ├── context/                 # State management
-│   │   │   └── AppContext.jsx       # Global app context with dual mode
-│   │   ├── utils/                   # Utilities
-│   │   │   └── apiClient.js         # Dual mode API router
-│   │   ├── assets/                  # Images, icons, data
-│   │   │   └── assets.js            # Static job data
-│   │   ├── App.jsx                  # Main app component
-│   │   ├── main.jsx                 # Entry point
-│   │   └── index.css                # Global styles
-│   ├── .env.local                   # Environment variables
-│   ├── package.json
-│   ├── vite.config.js
-│   └── index.html
+│   │   ├── components/       # UI components
+│   │   ├── pages/           # Page components
+│   │   ├── context/         # State management
+│   │   ├── utils/           # Utilities
+│   │   └── App.jsx          # Main app
+│   ├── .env.local           # Frontend config
+│   └── package.json
 │
-├── server/                          # Express Backend
-│   ├── db/                          # Database abstraction layer
-│   │   ├── index.js                 # Core utilities & helpers
-│   │   ├── jobs.js                  # Jobs CRUD operations
-│   │   ├── applications.js          # Applications CRUD operations
-│   │   └── users.js                 # Users CRUD operations
-│   ├── data/                        # JSON data storage
-│   │   ├── jobs.json                # Jobs database
-│   │   ├── applications.json        # Applications database
-│   │   └── users.json               # Users database
-│   ├── server.js                    # Express server & API routes
-│   ├── .env                         # Server configuration
-│   ├── package.json
-│   └── DB_ARCHITECTURE.md           # Database documentation
+├── server/                    # Express Backend
+│   ├── db/                   # Database layer (jobs, applications, users)
+│   ├── data/                 # JSON storage (jobs.json, applications.json)
+│   ├── server.js            # Express server
+│   ├── .env                 # Backend config
+│   └── package.json
 │
-├── .git/                            # Git repository
-├── README.md                        # This file
-├── DUAL_MODE_SETUP.md               # Dual mode detailed guide
-├── MODE_SWITCHING_GUIDE.md          # How to switch between modes
-├── JOBS_CARDS_FIX.md                # Job cards loading fix
-└── .gitignore
+└── README.md                 # This file
 ```
-
----
-
-## 🔧 Technology Stack
-
-### Frontend
-- **React 19** - UI framework
-- **Vite 7** - Build tool
-- **React Router v7** - Navigation
-- **Tailwind CSS** - Styling
-- **Clerk** - Authentication
-- **Quill 2.0** - Rich text editor
-- **React Toastify** - Notifications
-- **Moment.js** - Date formatting
-
-### Backend
-- **Node.js** - Runtime
-- **Express.js** - Web framework
-- **JSON Files** - Data storage
-- **CORS** - Cross-origin requests
-- **dotenv** - Environment variables
-
----
-
-## 🎯 Dual Mode Feature
-
-The app can run in two modes:
-
-### Mode 1: Simulated API 💾
-Uses browser **localStorage** with simulated network delays.
-
-```bash
-# .env.local
-VITE_USE_REAL_API=false
-```
-
-- No backend needed
-- Works offline
-- Perfect for development
-- Data in browser
-
-### Mode 2: Real Backend 🌐
-Uses actual **Express backend** with JSON file storage.
-
-```bash
-# .env.local
-VITE_USE_REAL_API=true
-```
-
-- Backend required
-- Production-like
-- Persistent data to disk
-- Full CRUD operations
-
-**See `DUAL_MODE_SETUP.md` for detailed guide.**
 
 ---
 
 ## ⚙️ Configuration
 
-### Frontend (.env.local)
-
+### Frontend: `client/.env.local`
 ```bash
-# Clerk authentication (get key from https://dashboard.clerk.com/last-active?path=api-keys)
-# Leave blank to work without authentication
-VITE_CLERK_PUBLISHABLE_KEY=pk_live_YOUR_KEY_HERE
+# Clerk authentication (optional)
+VITE_CLERK_PUBLISHABLE_KEY=pk_test_YOUR_KEY
 
 # Dual Mode
-VITE_USE_REAL_API=false                    # false or true
-VITE_API_URL=http://localhost:5000/api     # Backend URL
-
-# Simulation
-VITE_FAKE_API_DELAY=300                    # Network delay in ms
+VITE_USE_REAL_API=false              # false=simulated, true=real backend
+VITE_API_URL=http://localhost:5000/api
+VITE_FAKE_API_DELAY=300              # Simulated network delay (ms)
 ```
 
-**Note:** If `VITE_CLERK_PUBLISHABLE_KEY` is not set, the app will work without authentication but you won't be able to sign in with Clerk. See `CLERK_SETUP.md` for setup instructions.
-
-### Backend (.env)
-
+### Backend: `server/.env`
 ```bash
-# Server
 PORT=5000
-
-# Database (currently JSON files)
 DATABASE_TYPE=json
 ```
 
 ---
 
-## 🗄️ Database
+## 🔄 Dual Mode Explained
 
-### Storage Type: JSON Files
+### Mode 1: Simulated 💾
+- No backend needed
+- Data in browser localStorage
+- Perfect for learning/testing
+- **Set:** `VITE_USE_REAL_API=false`
 
-Data is stored in `/server/data/`:
+### Mode 2: Real Backend 🌐
+- Express backend required
+- Data in JSON files (`/server/data/`)
+- Production-like
+- **Set:** `VITE_USE_REAL_API=true`
 
-```
-/data/
-├── jobs.json              # Job listings
-├── applications.json      # Job applications
-└── users.json             # User accounts
-```
-
-### Database Layer (server/db/)
-
-Clean abstraction for all database operations:
-
-- **db/index.js** - Core utilities
-- **db/jobs.js** - Job CRUD
-- **db/applications.js** - Application CRUD
-- **db/users.js** - User CRUD
-
-Easy to migrate to MongoDB/PostgreSQL - just update these files!
+### Switch Modes
+Edit `client/.env.local` and change `VITE_USE_REAL_API`, then restart frontend.
 
 ---
 
-## 🔌 API Endpoints
+## 🔧 Technology Stack
 
-### Available in Real Backend Mode
-
-```
-GET    /api/jobs                  - Get all jobs
-GET    /api/applications          - Get all applications
-POST   /api/applications          - Create application
-PUT    /api/applications/:id      - Update application
-DELETE /api/applications/:id      - Delete application
-GET    /api/users                 - Get all users
-```
+| Layer | Tech |
+|-------|------|
+| **Frontend** | React 19, Vite 7, React Router, Tailwind CSS |
+| **Backend** | Node.js, Express 5, CORS |
+| **Database** | JSON files (easily swap for MongoDB/PostgreSQL) |
+| **Auth** | Clerk (optional) |
+| **Editor** | Quill 2.0 (rich text) |
 
 ---
 
-## 👥 Features
-
-### For Job Seekers
-- ✅ Browse jobs with filters
-- ✅ Search by title and location
-- ✅ Apply for jobs
-- ✅ Upload CV/Resume
-- ✅ Manage applications
-- ✅ View application status
-
-### For Recruiters
-- ✅ Post new job listings
-- ✅ View job applications
-- ✅ Manage posted jobs
-- ✅ View applicant details
-- ✅ Update application status
-
-### Authentication
-- ✅ Clerk OAuth integration
-- ✅ Recruiter email/password
-- ✅ Per-user data isolation
-- ✅ Logout functionality
-
----
-
-## 📊 Data
-
-### Job Locations (Rwanda Only)
-- Kigali
-- Huye
-- Butare
-- Muhanga
-- Gitarama
-- Ruhengeri
-- Musanze
-
-### Job Categories
-- IT
-- Engineering
-- Sales
-- Marketing
-- HR
-- Finance
-
----
-
-## 🚀 Running the Application
-
-### Prerequisites
+## 🔌 API Endpoints (Real Backend)
 
 ```bash
-# Node.js 16+ required
-node --version
-npm --version
+GET    /api/jobs                  # Get all jobs
+GET    /api/applications          # Get all applications
+POST   /api/applications          # Create application
+PUT    /api/applications/:id      # Update application
+DELETE /api/applications/:id      # Delete application
+GET    /api/users                 # Get all users
 ```
 
-### Installation
-
+Test with:
 ```bash
-# Frontend
-cd client
-npm install
-
-# Backend
-cd server
-npm install
+curl http://localhost:5000/api/jobs
 ```
 
-### Start Development
+---
 
-#### Simulated Mode (Fastest)
+## 📚 Available Commands
+
+### Frontend
 ```bash
 cd client
-npm run dev
-# Opens http://localhost:5173
+npm install                 # Install dependencies
+npm run dev               # Start dev server (port 5173)
+npm run build             # Production build
+npm run preview           # Preview production build
+npm run lint              # ESLint check
 ```
 
-#### Real Backend Mode
-```bash
-# Terminal 1
-cd server
-npm start
-
-# Terminal 2
-cd client
-npm run dev
-```
-
----
-
-## 🔍 Console Debugging
-
-When running, check browser console for API activity:
-
-**Simulated Mode:**
-```
-💾 [14:23:45] (Simulated) GET /jobs
-✓ Jobs loaded: 5
-```
-
-**Real Backend Mode:**
-```
-📡 [14:23:45] GET /jobs
-✓ Jobs received: 5
-```
-
----
-
-## 🛠️ Development
-
-### Frontend Only
-
-```bash
-cd client
-npm run dev          # Start dev server
-npm run build        # Production build
-npm run preview      # Preview build
-npm run lint         # ESLint check
-```
-
-### Backend Only
-
+### Backend
 ```bash
 cd server
-npm start            # Start server
+npm install               # Install dependencies
+npm start                # Start server (port 5000)
+npm run server           # Start with nodemon (auto-reload)
 ```
-
----
-
-## 📚 Documentation
-
-- **DUAL_MODE_SETUP.md** - Complete dual mode guide
-- **MODE_SWITCHING_GUIDE.md** - How to switch modes
-- **JOBS_CARDS_FIX.md** - Job cards loading explanation
-- **server/DB_ARCHITECTURE.md** - Database layer documentation
 
 ---
 
 ## 🐛 Troubleshooting
 
-### Jobs not showing?
+### Port Already in Use
 ```bash
-# Check console for errors
-# Simulated mode: Should show static jobs
-# Real mode: Check if backend is running
+# Kill process using port 5173
+lsof -ti:5173 | xargs kill -9
+
+# Kill process using port 5000
+lsof -ti:5000 | xargs kill -9
+
+# Windows: Use Task Manager or taskkill
 ```
 
-### Port already in use?
+### Module Not Found
 ```bash
-# Kill existing process
-lsof -ti:5173 | xargs kill -9  # Frontend
-lsof -ti:5000 | xargs kill -9  # Backend
+cd client (or server)
+rm -rf node_modules package-lock.json
+npm install
 ```
 
-### Can't connect to backend?
-```bash
-# Verify backend is running
-curl http://localhost:5000/
+### Can't Connect to Backend
+- Check backend is running: `npm start` in `/server`
+- Verify `VITE_USE_REAL_API=true` in `client/.env.local`
+- Test: `curl http://localhost:5000/`
 
-# Check VITE_USE_REAL_API=true in .env.local
-# Check VITE_API_URL is correct
-```
+### Jobs Not Showing
+1. Check browser console (F12)
+2. Verify `.env.local` configuration
+3. Check if backend is running (for real mode)
+4. Restart the app
 
-### Clear data?
-```bash
-# Simulated mode: Clear browser localStorage
-# Real mode: Delete /server/data/*.json files
-```
+### .env Changes Not Applied
+- Edit the `.env.local` file
+- Wait 2-3 seconds for hot reload
+- If not working, restart: `Ctrl+C` then `npm run dev`
 
 ---
 
-## 🔄 Switching Between Modes
-
-### Current Mode?
-Check `/client/.env.local`:
-```bash
-VITE_USE_REAL_API=false  # Simulated
-# or
-VITE_USE_REAL_API=true   # Real Backend
-```
-
-### To Switch
-1. Edit `client/.env.local`
-2. Restart frontend: `npm run dev`
-3. Done!
-
-**See MODE_SWITCHING_GUIDE.md for detailed instructions.**
-
----
-
-## 📦 File Sizes
-
-- Frontend bundle: ~500KB
-- Backend: ~2MB (with node_modules)
-- Database: ~50KB (JSON files)
-
----
-
-## 🎓 Learning Resources
-
-- React: https://react.dev
-- Vite: https://vitejs.dev
-- Express: https://expressjs.com
-- Tailwind CSS: https://tailwindcss.com
-- Clerk: https://clerk.com
-
----
-
-## 📝 Notes
-
-- All locations are Rwanda cities only
-- Data persists based on mode (localStorage or JSON files)
-- No switching between modes during session (requires restart)
-- Backend can be easily migrated to real database
-- Mobile responsive design
-
----
-
-## 🚀 Deployment
-
-### Frontend (Vercel, Netlify, etc.)
-```bash
-cd client
-npm run build
-# Deploy dist/ folder
-```
-
-### Backend (Heroku, Railway, etc.)
-```bash
-cd server
-# Deploy with npm start command
-```
-
-Set environment variables on hosting platform!
-
----
-
-## 📞 Support
-
-**Issues?**
-1. Check console for errors (F12)
-2. Review documentation files
-3. Verify configuration in .env files
-4. Check if services are running
-
----
-
-## ✨ Features Summary
+## 📦 Project Features
 
 | Feature | Status |
 |---------|--------|
 | Job Listings | ✅ Complete |
 | Search & Filter | ✅ Complete |
-| Job Applications | ✅ Complete |
+| Apply for Jobs | ✅ Complete |
 | CV Upload | ✅ Complete |
 | Recruiter Dashboard | ✅ Complete |
-| Authentication | ✅ Complete |
+| Application Tracking | ✅ Complete |
 | Dual Mode API | ✅ Complete |
-| Database Layer | ✅ Complete |
 | Responsive Design | ✅ Complete |
-| Documentation | ✅ Complete |
+| Dark Mode Ready | ✅ Tailwind |
 
 ---
 
-## 🎉 Ready to Go!
+## 📊 Data Format
 
-Everything is set up and ready to use:
-
-```bash
-# Quick start (simulated mode)
-cd client && npm run dev
-
-# Then open http://localhost:5173
+### Jobs (jobs.json)
+```json
+{
+  "id": "unique-id",
+  "title": "Software Engineer",
+  "company": "Tech Company",
+  "location": "Kigali",
+  "description": "Job details...",
+  "salary": "$50,000 - $70,000",
+  "postedDate": "2025-11-26"
+}
 ```
 
-Enjoy building! 🚀
+### Applications (applications.json)
+```json
+{
+  "id": "unique-id",
+  "jobId": "job-id",
+  "applicantName": "John Doe",
+  "applicantEmail": "john@example.com",
+  "cv": "base64-encoded-file",
+  "appliedDate": "2025-11-26"
+}
+```
 
 ---
 
-**Last Updated:** November 26, 2025
+## 🚀 Deployment
+
+### Frontend (Vercel/Netlify)
+```bash
+cd client
+npm run build
+# Deploy dist/ folder to Vercel or Netlify
+```
+
+### Backend (Railway/Render)
+```bash
+# On Railway.app:
+# 1. Connect GitHub repo
+# 2. Select repo
+# 3. Deploy automatically
+
+# On Render.com:
+# 1. New Web Service
+# 2. Build: npm install
+# 3. Start: npm start
+```
+
+**Set Environment Variables on Host:**
+- Frontend: `VITE_API_URL=https://your-backend-url/api`
+- Backend: `PORT=5000`
+
+---
+
+## 🏙️ Supported Locations & Categories
+
+**Locations:** Kigali, Muhanga, Huye, Gitarama, Ruhengeri, Musanze, Butare
+
+**Categories:** IT, Engineering, Finance, Sales, Marketing, HR, Education, Healthcare
+
+---
+
+## 📚 Learning Resources
+
+- **React:** https://react.dev
+- **Vite:** https://vitejs.dev
+- **Express:** https://expressjs.com
+- **Tailwind:** https://tailwindcss.com
+- **Node.js:** https://nodejs.org/docs
+
+---
+
+## 📝 Important Notes
+
+- Data persists based on mode (localStorage or JSON files)
+- No password hashing in current version (add for production)
+- Add input validation before production use
+- Use real database (MongoDB/PostgreSQL) for production
+- Implement proper authentication (JWT/OAuth) before deploying
+
+---
+
+## 🎓 Next Steps
+
+1. ✅ Run the app in simulated mode
+2. 📖 Explore the code in `/client/src/`
+3. 🔄 Switch to real backend mode
+4. 🎨 Customize colors/design
+5. ✨ Add new features
+6. 🚀 Deploy to production
+
+---
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feature/amazing-feature`
+3. Commit changes: `git commit -m 'Add amazing feature'`
+4. Push: `git push origin feature/amazing-feature`
+5. Open a Pull Request
+
+---
+
+## 📞 Support
+
+- **Issues:** https://github.com/Tapiwanashe6/job-portal/issues
+- **Browser Console:** F12 for errors
+- **Terminal Output:** Check for error messages
+
+---
+
+## 📄 License
+
+ISC License - Free to use, modify, and distribute.
+
+---
+
+**Last Updated:** November 26, 2025  
+**Status:** ✅ Production Ready (with modifications)  
 **Version:** 1.0.0
+
+Happy coding! 🚀
