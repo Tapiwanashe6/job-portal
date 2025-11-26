@@ -1,0 +1,42 @@
+[
+  {
+    "_id": "user1",
+    "name": "John Doe",
+    "email": "john@example.com",
+    "role": "job_seeker",
+    "profilePicture": null,
+    "resume": null,
+    "location": "Kigali",
+    "createdAt": "2025-10-15T08:00:00Z"
+  },
+  {
+    "_id": "user2",
+    "name": "Jane Smith",
+    "email": "jane@example.com",
+    "role": "recruiter",
+    "company": "Tech Corp",
+    "profilePicture": null,
+    "location": "Muhanga",
+    "createdAt": "2025-10-20T10:30:00Z"
+  },
+  {
+    "_id": "user3",
+    "name": "Bob Johnson",
+    "email": "bob@example.com",
+    "role": "job_seeker",
+    "profilePicture": null,
+    "resume": null,
+    "location": "Gitarama",
+    "createdAt": "2025-11-01T12:15:00Z"
+  },
+  {
+    "_id": "user4",
+    "name": "Alice Williams",
+    "email": "alice@example.com",
+    "role": "recruiter",
+    "company": "Cloud Systems",
+    "profilePicture": null,
+    "location": "Huye",
+    "createdAt": "2025-11-05T14:45:00Z"
+  }
+]

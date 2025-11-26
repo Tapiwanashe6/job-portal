@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { assets } from '../assets/assets';
+import AppContext from '../context/AppContext';
 
 function Dashboard() {
 
     const navigate = useNavigate()
+    const { recruiterData, logoutRecruiter } = useContext(AppContext)
 
     return (
         <div className='min-h-screen'>
@@ -12,14 +14,23 @@ function Dashboard() {
             {/* Navbar for Recruiter Panel*/}
             <div className='shadow py-4'>
                 <div className='px-5 flex justify-between items-center'>
-                    <img onClick={e => navigate('/')} className='max-sm:w-32 cursor-pointer' src={assets.logo} alt="" />
+                    <div onClick={()=> navigate('/')} className='cursor-pointer flex items-center gap-2'>
+                        <span className='text-2xl'>🛡️</span>
+                        <span className='text-xl'>
+                            <span className='font-bold text-black'>Job</span>
+                            <span className='text-gray-800'>Guaranteed</span>
+                        </span>
+                    </div>
                     <div className='flex items-center gap-3'>
-                        <p className='max-sm:hidden'>Welcome, GreatStack</p>
+                        <p className='max-sm:hidden'>Welcome, {recruiterData?.name || 'Company'}</p>
                         <div className='relative group'>
                             <img className='w-8 border rounded-full' src={assets.company_icon} alt="" />
                             <div className='absolute hidden group-hover:block top-0 right-0 z-10 text-back rounded pt-12'>
                                 <ul className='list-none m-0 p-2 bg-white rounded-md border text-sm'>
-                                    <li className='py-1 px-2 cursor-pionter pr-10'>Logout</li>
+                                    <li onClick={() => {
+                                        logoutRecruiter()
+                                        navigate('/')
+                                    }} className='py-1 px-2 cursor-pointer pr-10'>Logout</li>
                                 </ul>
                             </div>
                         </div>
@@ -27,7 +38,7 @@ function Dashboard() {
                 </div>
             </div>
 
-            <div className='flex items-start'>
+            <div className='flex items-start overflow-visible'>
 
                 {/* Left Sidebar with option to add job, manage jobs, view applications */}
                 <div className='inline-block min-h-screen border-r-2'>
@@ -49,7 +60,7 @@ function Dashboard() {
                     </ul>
                 </div>
 
-                <div>
+                <div className='flex-1 overflow-visible'>
                     <Outlet />
                 </div>
 

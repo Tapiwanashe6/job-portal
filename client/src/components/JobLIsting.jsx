@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { assets, JobCategories, JobLocations} from '../assets/assets.js';
+import { assets, JobCategories, JobLocations, JobPrograms, JobAgents} from '../assets/assets.js';
 import AppContext from '../context/AppContext';
 import JobCard from './JobCard.jsx';
 import { useSearchParams } from 'react-router-dom';
@@ -12,6 +12,8 @@ function JobLIsting(props) {
     const [currentPage, setCurrentPage] = useState(1)
     const [selectedCategories,setSelectedCategories] = useState([])
     const [selectedLocations,setSelectedLocations] = useState([])
+    const [selectedPrograms,setSelectedPrograms] = useState([])
+    const [selectedAgents,setSelectedAgents] = useState([])
 
     const [filteredJobs,setFilteredJobs] = useState(jobs)
 
@@ -25,6 +27,31 @@ function JobLIsting(props) {
             prev => prev.includes(location) ? prev.filter(c => c !== location): [...prev,location])
     }
 
+    const handleProgramChange = (program) => {
+        setSelectedPrograms(
+            prev => prev.includes(program) ? prev.filter(p => p !== program): [...prev,program])
+    }
+
+    const handleAgentChange = (agent) => {
+        setSelectedAgents(
+            prev => prev.includes(agent) ? prev.filter(a => a !== agent): [...prev,agent])
+    }
+
+    // Combine static jobs with recruiter jobs
+    const getAllJobs = () => {
+        const recruiterJobs = JSON.parse(localStorage.getItem('recruiterJobs') || '[]')
+        // Filter out jobs that are hidden (visible === false)
+        const visibleRecruiterJobs = recruiterJobs.filter(job => job.visible !== false)
+        return [...jobs, ...visibleRecruiterJobs]
+    }
+
+    // Check if job is new (less than 2 weeks old)
+    const isJobNew = (jobDate) => {
+        const jobTime = new Date(jobDate).getTime()
+        const currentTime = new Date().getTime()
+        const twoWeeksInMs = 14 * 24 * 60 * 60 * 1000
+        return (currentTime - jobTime) < twoWeeksInMs
+    }
 
     useEffect(()=>{
 
@@ -32,18 +59,23 @@ function JobLIsting(props) {
 
         const matchesLocation = job => selectedLocations.length === 0 || selectedLocations.includes(job.location)
 
+        const matchesProgram = job => selectedPrograms.length === 0 || selectedPrograms.includes(job.program)
+
+        const matchesAgent = job => selectedAgents.length === 0 || selectedAgents.includes(job.agent)
+
         const matchesTitle = job => searchFilter.title === "" || job.title.toLowerCase().includes(searchFilter.title.toLowerCase())
 
         const matchesSearchLocation = job => searchFilter.location === "" || job.location.toLowerCase().includes(searchFilter.location.toLowerCase())
 
-        const newFilteredJobs = jobs.slice().reverse().filter(
-            job => matchesCategory(job) && matchesLocation(job) && matchesTitle(job) && matchesSearchLocation(job)
+        const allJobs = getAllJobs()
+        const newFilteredJobs = allJobs.slice().reverse().filter(
+            job => matchesCategory(job) && matchesLocation(job) && matchesProgram(job) && matchesAgent(job) && matchesTitle(job) && matchesSearchLocation(job)
         )
 
         setFilteredJobs(newFilteredJobs)
         setCurrentPage(1)
 
-    }, [jobs,selectedCategories, selectedLocations, searchFilter])
+    }, [jobs,selectedCategories, selectedLocations, selectedPrograms, selectedAgents, searchFilter])
 
     return (
         <div className='container 2xl:px-20 mx-auto flex flex-col lg:flex-row max-lg:space-y-8 py-8'>
@@ -118,6 +150,46 @@ function JobLIsting(props) {
                         }
                     </ul>
                 </div>
+
+                {/* Programs Filter */}
+                <div className={showFilter ? "" : "max-lg:hidden"}>
+                    <h4 className='font-medium text-lg py-4 pt-14'>Search by Programs</h4>
+                    <ul className='space-y-4 text-gray-600'>
+                        {
+                            JobPrograms.map((program,index)=>(
+                                <li className='flex gap-3 items-center' key={index}>
+                                    <input className='scale-125' 
+                                    type='checkbox'
+                                    onChange={()=> handleProgramChange(program)} 
+                                    checked = {selectedPrograms.includes(program)}
+                                    />
+                                    {program}
+                                </li>
+                            ))
+                        }
+                    </ul>
+                </div>
+
+                {/* Agents Filter */}
+                {JobAgents.length > 0 && (
+                    <div className={showFilter ? "" : "max-lg:hidden"}>
+                        <h4 className='font-medium text-lg py-4 pt-14'>Search by Agents</h4>
+                        <ul className='space-y-4 text-gray-600'>
+                            {
+                                JobAgents.map((agent,index)=>(
+                                    <li className='flex gap-3 items-center' key={index}>
+                                        <input className='scale-125' 
+                                        type='checkbox'
+                                        onChange={()=> handleAgentChange(agent)} 
+                                        checked = {selectedAgents.includes(agent)}
+                                        />
+                                        {agent}
+                                    </li>
+                                ))
+                            }
+                        </ul>
+                    </div>
+                )}
             </div>
 
             {/*Job listings */}
@@ -126,7 +198,7 @@ function JobLIsting(props) {
                 <p className='mb-8'>Get your desired job from top companies</p>
                 <div className='grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4'>
                     {filteredJobs.slice((currentPage-1)*6,currentPage*6).map((job,index)=>(
-                        <JobCard key={index} job={job}/>
+                        <JobCard key={index} job={job} isNew={isJobNew(job.date)}/>
                     ))}
                 </div>
 

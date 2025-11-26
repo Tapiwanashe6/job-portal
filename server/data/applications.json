@@ -1,0 +1,38 @@
+[
+  {
+    "_id": "app1",
+    "jobId": "1",
+    "userId": "user1",
+    "applicantName": "John Doe",
+    "applicantEmail": "john@example.com",
+    "resume": null,
+    "coverLetter": "I am very interested in this position and believe my experience aligns well with your requirements.",
+    "status": "Applied",
+    "createdAt": "2025-11-20T11:00:00Z",
+    "updatedAt": "2025-11-20T11:00:00Z"
+  },
+  {
+    "_id": "app2",
+    "jobId": "2",
+    "userId": "user3",
+    "applicantName": "Bob Johnson",
+    "applicantEmail": "bob@example.com",
+    "resume": null,
+    "coverLetter": "I have 5 years of backend development experience with Python and Node.js.",
+    "status": "Applied",
+    "createdAt": "2025-11-19T15:30:00Z",
+    "updatedAt": "2025-11-19T15:30:00Z"
+  },
+  {
+    "_id": "app3",
+    "jobId": "3",
+    "userId": "user1",
+    "applicantName": "John Doe",
+    "applicantEmail": "john@example.com",
+    "resume": null,
+    "coverLetter": "Excited to apply for this Full Stack Developer position.",
+    "status": "Accepted",
+    "createdAt": "2025-11-18T10:00:00Z",
+    "updatedAt": "2025-11-19T09:00:00Z"
+  }
+]

@@ -34,6 +34,7 @@ function RecruiterLogin(props) {
             }
             localStorage.setItem('recruiterAccount', JSON.stringify(recruiterData))
             localStorage.setItem('recruiterLoggedIn', 'true')
+            localStorage.setItem('recruiterCompanyName', name)
             setRecruiterData(recruiterData)
             alert('Account created successfully! You are now logged in.')
             setShowRecruiterLogin(false)
@@ -49,14 +50,20 @@ function RecruiterLogin(props) {
                 return
             }
 
-            const recruiterDataStored = JSON.parse(savedRecruiter)
-            if (recruiterDataStored.email === email && recruiterDataStored.password === password) {
-                localStorage.setItem('recruiterLoggedIn', 'true')
-                setRecruiterData(recruiterDataStored)
-                alert('Login successful!')
-                setShowRecruiterLogin(false)
-            } else {
-                alert('Invalid email or password')
+            try {
+                const recruiterDataStored = JSON.parse(savedRecruiter)
+                if (recruiterDataStored.email === email && recruiterDataStored.password === password) {
+                    localStorage.setItem('recruiterLoggedIn', 'true')
+                    localStorage.setItem('recruiterCompanyName', recruiterDataStored.name)
+                    setRecruiterData(recruiterDataStored)
+                    alert('Login successful!')
+                    setShowRecruiterLogin(false)
+                } else {
+                    alert('Invalid email or password')
+                }
+            } catch (error) {
+                alert('Error logging in. Please try again.')
+                console.error('Login error:', error)
             }
         }
     }

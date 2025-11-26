@@ -16,12 +16,19 @@ function Navbar(props) {
     return (
         <div className='shadow py-4'>
            <div className='container px-4 2xl:px-20 mx-auto flex justify-between items-center'>
-             <img onClick={()=> navigate('/')} className='cursor-pointer' src={assets.logo} alt="Logo" />
+             <div onClick={()=> navigate('/')} className='cursor-pointer flex items-center gap-2'>
+                <span className='text-2xl'>🛡️</span>
+                <span className='text-xl'>
+                    <span className='font-bold text-black'>Job</span>
+                    <span className='text-gray-800'>Guaranteed</span>
+                </span>
+             </div>
              {
              recruiterData
              ?<div className='flex items-center gap-3'>
                 <Link to={'/dashboard'} className='text-gray-600'>Dashboard</Link>
-                <p className='max-sm:hidden'>Hi, {recruiterData.name}!</p>
+                <Link to={'/applications'} className='text-gray-600'>Applied Jobs</Link>
+                <p className='max-sm:hidden text-sm'>Welcome, {recruiterData.name}!</p>
                 <button onClick={logoutRecruiter} className='text-gray-600 px-4 py-2 border border-gray-300 rounded-lg'>Logout</button>
              </div>
              : user

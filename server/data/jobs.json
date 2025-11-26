@@ -1,0 +1,62 @@
+[
+  {
+    "_id": "1",
+    "title": "Senior Frontend Developer",
+    "company": "Tech Corp",
+    "location": "Kigali",
+    "salary": "$80,000 - $120,000",
+    "level": "Senior",
+    "category": "Frontend",
+    "description": "We are looking for an experienced Frontend Developer to join our growing team. You will work with React, Vue, and modern JavaScript frameworks.",
+    "date": "2025-11-20T10:00:00Z",
+    "applicants": 45
+  },
+  {
+    "_id": "2",
+    "title": "Backend Engineer",
+    "company": "Cloud Systems",
+    "location": "Muhanga",
+    "salary": "$70,000 - $100,000",
+    "level": "Mid",
+    "category": "Backend",
+    "description": "Join our backend team and build scalable APIs. Experience with Node.js, Python, or Go required.",
+    "date": "2025-11-19T14:30:00Z",
+    "applicants": 32
+  },
+  {
+    "_id": "3",
+    "title": "Full Stack Developer",
+    "company": "StartUp Labs",
+    "location": "Gitarama",
+    "salary": "$60,000 - $90,000",
+    "level": "Mid",
+    "category": "Full Stack",
+    "description": "Build end-to-end solutions with React and Node.js. Work on exciting projects from concept to deployment.",
+    "date": "2025-11-18T09:15:00Z",
+    "applicants": 58
+  },
+  {
+    "_id": "4",
+    "title": "Data Scientist",
+    "company": "AI Innovations",
+    "location": "Huye",
+    "salary": "$75,000 - $110,000",
+    "level": "Senior",
+    "category": "Data Science",
+    "description": "Work with machine learning models and big data. Python, TensorFlow, and SQL expertise required.",
+    "date": "2025-11-17T11:45:00Z",
+    "applicants": 28
+  },
+  {
+    "_id": "5",
+    "title": "DevOps Engineer",
+    "company": "Infrastructure Pro",
+    "location": "Ruhengeri",
+    "salary": "$70,000 - $105,000",
+    "level": "Mid",
+    "category": "DevOps",
+    "description": "Manage cloud infrastructure and deployment pipelines. Docker, Kubernetes, and AWS experience needed.",
+    "date": "2025-11-16T16:20:00Z",
+    "applicants": 19
+  }
+]
